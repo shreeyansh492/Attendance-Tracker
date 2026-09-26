@@ -1,0 +1,119 @@
+﻿<Window x:Class="Tracker.View.BreakWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tracker.View"
+        mc:Ignorable="d"
+        Title="BreakWindow"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Background="{StaticResource WizeBackgroundBrush}"
+        Closing="BreakWindow_OnClosing">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
+
+    <Grid>
+        <Rectangle Fill="#0D0D1A"/>
+
+        <Border Width="560"
+                Padding="34"
+                CornerRadius="20"
+                Background="{StaticResource WizeSurfaceBrush}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="400">
+
+                <Border Width="70" Height="70" CornerRadius="8" HorizontalAlignment="Center">
+                    <Image Source="/Assets/Logo.png" Width="52" Height="52" Stretch="Uniform"/>
+                </Border>
+
+                <TextBlock Text="Break Mode"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           TextAlignment="Center"
+                           Margin="0,24,0,6"/>
+
+                <TextBlock Text="Select a break type and start your break."
+                           FontSize="14"
+                           Foreground="{StaticResource WizeMutedTextBrush}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,24"/>
+
+                <!-- SELECTION & START BUTTON (Hidden when already on break) -->
+                <StackPanel>
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsOnBreak}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <TextBlock Text="Break Type"
+                               FontSize="14"
+                               Foreground="{StaticResource WizeMutedTextBrush}" />
+
+                    <ComboBox ItemsSource="{Binding Reasons}"
+                              SelectedValue="{Binding SelectedReason, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValuePath="Value"
+                              Style="{StaticResource WizeComboBoxStyle}"
+                              Margin="0,6,0,14">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button x:Name="BreakStartButton"
+                            Content="Start Break"
+                            Height="46"
+                            Margin="0,10,0,10"
+                            Click="BreakStartButton_OnClick" />
+                </StackPanel>
+
+                <!-- END BREAK BUTTON (Visible ONLY when on break) -->
+                <Button x:Name="BreakEndButton"
+                        Content="End Break &amp; Resume Work"
+                        Height="46"
+                        Visibility="{Binding IsOnBreak, Converter={StaticResource BoolToVis}}"
+                        Click="BreakEndButton_OnClick" />
+
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="{StaticResource WizeSuccessBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="0,16,0,0"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="{StaticResource WizeDangerBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,0"
+                           TextAlignment="Center"/>
+
+                <TextBlock Text="This screen will remain locked until the break is ended."
+                           FontSize="11"
+                           Foreground="{StaticResource WizeMutedTextBrush}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,24,0,0"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,17 @@
+# Build results
+[Dd]ebug/
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
+
+# IDE files (VS Code / Visual Studio)
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Operating System files
+Thumbs.db
+.DS_Store
+

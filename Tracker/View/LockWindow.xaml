@@ -1,0 +1,131 @@
+﻿<Window x:Class="Tracker.View.LockWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tracker.View"
+        mc:Ignorable="d"
+        Title="LockWindow"
+            WindowStyle="None"
+            ResizeMode="NoResize"
+            WindowState="Maximized"
+            Topmost="True"
+            ShowInTaskbar="False"
+            Background="{StaticResource WizeBackgroundBrush}"
+            Closing="LockWindow_OnClosing">
+    <Grid>
+        <Rectangle Fill="#0D0D1A"/>
+        <Border Width="520"
+                Padding="34"
+                CornerRadius="20"
+                Background="{StaticResource WizeSurfaceBrush}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="400">
+
+                <Border Width="70"
+                        Height="70"
+        
+                        CornerRadius="8"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
+                    <Image Source="/Assets/Logo.png"
+                           Width="52"
+                           Height="52"
+                           Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock Text="{Binding Title}"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           TextAlignment="Center"
+                           Margin="0,24,0,6" />
+
+                <TextBlock Text="{Binding Subtitle}"
+                           FontSize="14"
+                           Foreground="{StaticResource WizeMutedTextBrush}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,14" />
+
+                <TextBlock Text="{Binding IdleStartedAtText}"
+                           FontSize="13"
+                           Foreground="{StaticResource WizeWarningBrush}"
+                           TextAlignment="Center"
+                           Margin="0,0,0,22" />
+
+                <Button x:Name="ContinueButton"
+                        Content="Continue Working"
+                        Height="46"
+                        Click="ContinueButton_OnClick">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="ButtonBorder"
+                                    Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"
+                                    CornerRadius="8"
+                                    Padding="14,9">
+
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ButtonBorder"
+                                            Property="Background"
+                                            Value="#2A2A45" />
+
+                                    <Setter TargetName="ButtonBorder"
+                                            Property="Opacity"
+                                            Value="1" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                    <Button.Background>
+                        <StaticResource ResourceKey="WizePrimaryBrush"/>
+                    </Button.Background>
+
+                    <Button.Foreground>
+                        <SolidColorBrush Color="White"/>
+                    </Button.Foreground>
+
+                </Button>
+
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="{StaticResource WizeSuccessBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="0,14,0,0"
+                           TextAlignment="Center" />
+
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="{StaticResource WizeDangerBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,0"
+                           TextAlignment="Center" />
+
+                <TextBlock Text="If you can read this, that means you were idle for more than 3 minutes!"
+                           FontSize="11"
+                           Foreground="{StaticResource WizeMutedTextBrush}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,24,0,0" />
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
